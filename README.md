@@ -11,6 +11,7 @@ This project involves creating a **REST API** using **Node.js** to enhance under
 ## Project Submission
 - Upload the project to Git without `node_modules`.
 - Include a `ReadMe.md` file explaining the project, its content, functionality, and usage.
+   - This can be done easily in Postman, with auto generated docs.
 
 ## General Requirements
 - Maintain clean and organized code by removing unnecessary `console.log` and comments.
