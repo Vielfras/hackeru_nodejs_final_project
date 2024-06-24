@@ -8,52 +8,51 @@
 ============================================
 */
 
-const connectDB = require('./config/db')
-const { cards, users } = require('./data/data')
-const Card = require('./models/Card')
-const User = require('./models/User')
+// 3rd party
+const chalk = require('chalk');
 
-const seedAll = async() => {
+// Mine
+const connectDB = require('./config/db');
+const { cards, users } = require('./data/data');
+const Card = require('./models/Card');
+const User = require('./models/User');
+const Benchmark = require('./utils/benchmarking');
 
-  console.log('\nDatabase seeding started...');
+
+
+const seedCards = async () => {
+  const insertedCards = await Card.insertMany(cards);
+  console.log(chalk.blue(`\t- Inserted ${insertedCards.length} cards`));
+};
+
+const seedUsers = async () => {
+  const insertedUsers = await User.insertMany(users);
+  console.log(chalk.blue(`\t- Inserted ${insertedUsers.length} users`));
+};
+
+const clearDatabase = async () => {
+  await Card.deleteMany();
+  await User.deleteMany();
+};
+
+
+const seedAll = async () => {
+  const startTime = Date.now();
 
   try {
-    
-    // Seed cards
+    await Benchmark(clearDatabase, chalk.bold.yellow('\nClearing the database:'), "Reset");
+    await Benchmark(seedCards, chalk.bold.yellow('\nSeeding Cards:'));
+    await Benchmark(seedUsers, chalk.bold.yellow('\nSeeding Users:'));
 
-      // delete all existing cards
-      await Card.deleteMany();
-      // insert seed cards
-      const insertedCards = await Card.insertMany(cards);
-      console.log(`  [i] Inserted ${insertedCards.length} cards`);
-
-    // Seed users
-
-      // delete all existing users
-      await User.deleteMany();
-      // insert seed users
-      const insertedUsers = await User.insertMany(users);
-      console.log(`  [i] Inserted ${insertedUsers.length} users`);
-
-    // Success
-
-      console.log('[v] Completed successfully');
-      process.exit(0);
-
-  } catch(e) {
-
-    // Error
-
-      console.log('[x] Seeding error')
-      console.log(e.message)
-      process.exit(1);
-
+    console.log(chalk.bold.underline.green('\nSeeding completed successfully\n'));
+  } catch (e) {
+    console.log(chalk.red('[x] Seeding error'));
+    console.log(chalk.red(e.message));
+    process.exit(1);
   }
+};
 
-}
-
-// Connect to database
-connectDB().then(()=>{
-  // Seed all collections
-  seedAll()
+connectDB().then(async () => {
+  await Benchmark(seedAll, chalk.bold.bgGreenBright("\n ----------==========  SEEDING DATABASE  ==========----------"));
+  process.exit(0);
 });
