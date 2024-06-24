@@ -3,21 +3,40 @@
 ## General Overview
 This project involves creating a **REST API** using **Node.js** to enhance understanding of code, modules, files, and directories that constitute such a project.
 
-## Key Technologies and Libraries
+### Key Technologies and Libraries
 - **Database**: MongoDB
 - **Framework**: Express.js
 - **Libraries**: mongoose, bcryptjs, joi, jsonwebtoken, config, morgan, cors, chalk
 
-## Project Submission
+### Project Submission
 - Upload the project to Git without `node_modules`.
 - Include a `ReadMe.md` file explaining the project, its content, functionality, and usage.
    - This can be done easily in Postman, with auto generated docs.
 
-## General Requirements
+### General Requirements
 - Maintain clean and organized code by removing unnecessary `console.log` and comments.
 - Write meaningful function and variable names.
 - Break the project into modules, each containing no more than 200 lines of code.
 - Adhere to code conventions.
+
+
+## Getting Started
+1. Clone repo
+2. Run `npm install`
+3. Create an .evf file with the following fields:
+```
+PORT = <you_desired_port>
+
+JWT_SECRET = "your_secret_here"
+JWT_EXPIRES_IN = "10m" 
+
+# Example:
+# MONGODB_URI_DEV = "mongodb://localhost:27017/bcards_01"
+MONGODB_URI_DEV = "mongodb://<path_to_your_db>"
+MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
+```
+4. To start the server run:
+`npm run dev` for development environment or `npm run prod` for production environment.
 
 ## Technical Requirements
 
