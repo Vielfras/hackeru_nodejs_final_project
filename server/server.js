@@ -19,6 +19,23 @@ const connectDB = require('./config/db');
 
 // --------------=====================  INIT  =====================-------------- 
 const { IP, PORT } = process.env;
+const isValidIP = (ip) => {
+  return true;
+};
+
+const isValidPort = (port) => {
+  return true;
+};
+
+if (!IP || !isValidIP(IP)) {
+  console.error(chalk.red('Error: Invalid or undefined IP address in the environment variables.'));
+  process.exit(1);
+}
+
+if (!PORT || !isValidPort(PORT)) {
+  console.error(chalk.red('Error: Invalid or undefined port in the environment variables.'));
+  process.exit(1);
+}
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/log.log'), { flags: 'a' })
 
 const app = express();
@@ -40,7 +57,9 @@ app.use('/api/auth', require('./routes/authRoutes'));
 
 // --------------=====================  RUN SERVER  =====================-------------- 
 connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is listening for requests on http://${IP}:${PORT}`)
+  app.listen(PORT, IP, () => {
+    console.log(chalk.bold.bgGreenBright(`Server is listening for requests on http://${IP}:${PORT}`));
   });
+}).catch((error) => {
+  console.error(chalk.bold.bgRedBright(`Failed to connect to the database: ${error.message}`));
 });

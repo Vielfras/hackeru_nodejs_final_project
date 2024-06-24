@@ -23,7 +23,8 @@ This project involves creating a **REST API** using **Node.js** to enhance under
 ## Getting Started
 1. Clone repo
 2. Run `npm install`
-3. Create an .env file with the following fields:
+3. Create a `logs` folder.
+4. Create an .env file with the following fields:
 ```
 IP="<desired_ip>"
 PORT = <desired_port>
@@ -37,9 +38,9 @@ MONGODB_URI_DEV = "mongodb://<path_to_your_db>"
 MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 ```
 
-4. [OPTIONAL] Seed you project by running `node seed.js` with data found in `./data/data.js`
+5. [OPTIONAL] Seed you project by running `node seed.js` with data found in `./data/data.js`
    - This may require setting ENV VARIABLE manually or updating packages.json with seed.js instead of server.js and then running the next step.
-5. To start the server run:
+6. To start the server run:
 `npm run dev` for development environment or `npm run prod` for production environment.
 
 ---
@@ -157,7 +158,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
    - [ ] Create a DELETE route `/cards/:id` to delete a card (accessible by the card creator or admin).
 
 ### Logger
-- [ ] Implement a logger using `morgan` to log all HTTP requests with detailed information.
+- [X] Implement a logger using `morgan` to log all HTTP requests with detailed information.
 
 ### Chalk
 - [ ] Use `chalk` to add colors to console outputs for better readability.
