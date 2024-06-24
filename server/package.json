@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "SET NODE_ENV=dev&&nodemon",
-    "prod": "SET NODE_ENV=prod&&nodemon"
+    "dev": "cross-env NODE_ENV=dev nodemon",
+    "prod": "cross-env NODE_ENV=prod nodemon"
   },
   "keywords": [],
   "author": "",
@@ -21,5 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
