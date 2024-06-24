@@ -11,7 +11,7 @@
 // 3rd party
 const chalk = require('chalk');
 
-// Mine
+// 1st Party
 const connectDB = require('./config/db');
 const { cards, users } = require('./data/data');
 const Card = require('./models/Card');

@@ -23,7 +23,7 @@ This project involves creating a **REST API** using **Node.js** to enhance under
 ## Getting Started
 1. Clone repo
 2. Run `npm install`
-3. Create an .evf file with the following fields:
+3. Create an .env file with the following fields:
 ```
 PORT = <you_desired_port>
 
@@ -35,7 +35,10 @@ JWT_EXPIRES_IN = "10m"
 MONGODB_URI_DEV = "mongodb://<path_to_your_db>"
 MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 ```
-4. To start the server run:
+
+4. [OPTIONAL] Seed you project by running `node seed.js` with data found in `./data/data.js`
+   - This may require setting ENV VARIABLE manually or updating packages.json with seed.js instead of server.js and then running the next step.
+5. To start the server run:
 `npm run dev` for development environment or `npm run prod` for production environment.
 
 ## Technical Requirements
