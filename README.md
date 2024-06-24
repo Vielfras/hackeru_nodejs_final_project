@@ -25,9 +25,10 @@ This project involves creating a **REST API** using **Node.js** to enhance under
 2. Run `npm install`
 3. Create an .env file with the following fields:
 ```
-PORT = <you_desired_port>
+IP="<desired_ip>"
+PORT = <desired_port>
 
-JWT_SECRET = "your_secret_here"
+JWT_SECRET = "secret_here"
 JWT_EXPIRES_IN = "10m" 
 
 # Example:

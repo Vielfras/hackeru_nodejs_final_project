@@ -1,32 +1,46 @@
 // Require
 require('dotenv').config();
-const express = require('express');
-const connectDB = require('./config/db');
-const morgan = require('morgan');
-const cors = require('cors');
 
-// Initialize express
+// 1st Party
+const fs = require('fs');
+const path = require('path');
+
+// 3rd Party - Base
+const cors = require('cors');
+const morgan = require('morgan');
+const express = require('express');
+
+// 3rd Party - Extra
+const chalk = require('chalk');
+
+// Mine
+const connectDB = require('./config/db');
+
+
+// --------------=====================  INIT  =====================-------------- 
+const { IP, PORT } = process.env;
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/log.log'), { flags: 'a' })
+
 const app = express();
 
-// Middlewares
+
+// --------------=====================  MIDDLEWARE  =====================-------------- 
 app.use(cors());
 app.use(express.json());
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
+app.use(morgan('combined', { stream: accessLogStream }))
 app.use(express.static('static'));
 
-// Routes
+// --------------=====================  ROUTES  =====================-------------- 
 app.use('/api/cards', require('./routes/cardsRoutes'));
 app.use('/api/users', require('./routes/usersRoutes'));
-app.use('/api/auth' , require('./routes/authRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
 
-// It is important to first connect to the database,
-// and only THEN start listening for requests.
-// This will prevent possible nasty bugs when running your app in shared\public cloud environments.
 
-const { PORT } = process.env;
 
-// Connect to database
-connectDB().then(()=>{
-  // Run server
-  app.listen(PORT, ()=> console.log(`Server is listening for requests on http://127.0.0.1:${PORT}`))
+// --------------=====================  RUN SERVER  =====================-------------- 
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is listening for requests on http://${IP}:${PORT}`)
+  });
 });
