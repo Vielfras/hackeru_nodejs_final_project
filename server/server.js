@@ -16,8 +16,8 @@ const chalk = require('chalk');
 // Mine
 const connectDB = require('./config/db');
 
-
 // --------------=====================  INIT  =====================-------------- 
+const SERVER_MODE = process.env.NODE_ENV;
 const { IP, PORT } = process.env;
 const isValidIP = (ip) => {
   return true;
@@ -41,10 +41,36 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/log.log'
 const app = express();
 
 
+
 // --------------=====================  MIDDLEWARE  =====================-------------- 
 app.use(cors());
 app.use(express.json());
-// app.use(morgan('dev'));
+
+
+if (SERVER_MODE !== 'prod') {
+  morgan.token('statusColor', (req, res) => {
+    const status = res.statusCode;
+    const color =
+      status >= 500 ? 'red' :
+      status >= 400 ? 'yellow' :
+      status >= 300 ? 'cyan' :
+      status >= 200 ? 'green' :
+      'white';
+    return chalk[color](status);
+  });
+
+  app.use(morgan((tokens, req, res) => {
+    return [
+      tokens.date(req, res),
+      chalk.blue(tokens.method(req, res)),
+      chalk.green(tokens.url(req, res)),
+      tokens.statusColor(req, res), 
+      chalk.cyan(tokens['remote-addr'](req, res)),
+      chalk.magenta(tokens['response-time'](req, res) + ' ms'),
+    ].join(' ');
+  }));
+}
+
 app.use(morgan('combined', { stream: accessLogStream }))
 app.use(express.static('static'));
 
