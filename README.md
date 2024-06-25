@@ -1,4 +1,6 @@
-# Node.js Project Summary
+# BCards
+##### HackerU Node.js Final Project 
+
 
 ## General Overview
 This project involves creating a **REST API** using **Node.js** to enhance understanding of code, modules, files, and directories that constitute such a project.
@@ -45,7 +47,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 
 ---
 
-## Technical Requirements
+## Server API
 
 ### 1. User Endpoints
 - **Register User**: `POST /users`
@@ -64,48 +66,6 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 - **Edit Card**: `PUT /cards/:id` (The card creator)
 - **Like Card**: `PATCH /cards/:id` (Registered user)
 - **Delete Card**: `DELETE /cards/:id` (Admin or the card creator)
-
-### 3. Logger
-- Use `morgan` to log all requests with details including request method, URL, status, and response time.
-
-### 4. Chalk
-- Use `chalk` to colorize console prints.
-
-### 5. CORS
-- Allow requests from authorized HTTP origins using `cors`.
-
-### 6. JSON
-- Allow handling of JSON requests.
-
-### 7. Public Directory
-- Route requests not handled by the application to the public directory and return a 404 error if the file is not found.
-
-### 8. Environments
-- Support local and cloud environments using MongoDB Atlas.
-
-### 9. Error Handling
-- Return appropriate HTTP status and error messages for unauthorized access or invalid data.
-
-### 10. Joi
-- Validate client-side objects using `joi` and return status and error messages for invalid objects.
-
-### 11. Bcryptjs
-- Encrypt user passwords before storing them in MongoDB and validate during login.
-
-### 12. Jsonwebtoken
-- Generate a JWT token containing user information such as `_id`, `isBusiness`, and `isAdmin`.
-
-### 13. Initial Data
-- Create initial data with three user types: regular user, business user, and admin, along with three business cards.
-
-### 14. Mongoose
-- Use `mongoose` to create models for `Users` and `Cards` with appropriate schema as outlined in the appendices.
-
-## Bonus Features
-1. Allow admins to change business numbers ensuring uniqueness.
-2. Create a file logger for requests with status code 400+ logging date, status code, and error message.
-3. Integrate Google API for non-admin and non-business user registration and login.
-4. Block users for 24 hours after three failed login attempts with incorrect password.
 
 ---
 
@@ -159,6 +119,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 
 ### 3. Logger
 - [X] Implement a logger using `morgan` to log all HTTP requests with detailed information.
+   - Request method, URL, status, and response time.
 
 ### 4. Chalk
 - [X] Use `chalk` to add colors to console outputs for better readability.
