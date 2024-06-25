@@ -16,6 +16,7 @@ const chalk = require('chalk');
 // Mine
 const connectDB = require('./config/db');
 
+
 // --------------=====================  INIT  =====================-------------- 
 const SERVER_MODE = process.env.NODE_ENV;
 const { IP, PORT } = process.env;
@@ -36,10 +37,10 @@ if (!PORT || !isValidPort(PORT)) {
   console.error(chalk.red('Error: Invalid or undefined port in the environment variables.'));
   process.exit(1);
 }
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/log.log'), { flags: 'a' })
 
 const app = express();
-
 
 
 // --------------=====================  MIDDLEWARE  =====================-------------- 
@@ -59,6 +60,10 @@ if (SERVER_MODE !== 'prod') {
     return chalk[color](status);
   });
 
+  morgan.token('date', (req, res, format) => {
+    return chalk.magenta(new Date().toLocaleString());
+  });
+
   app.use(morgan((tokens, req, res) => {
     return [
       tokens.date(req, res),
@@ -74,11 +79,11 @@ if (SERVER_MODE !== 'prod') {
 app.use(morgan('combined', { stream: accessLogStream }))
 app.use(express.static('static'));
 
+
 // --------------=====================  ROUTES  =====================-------------- 
 app.use('/api/cards', require('./routes/cardsRoutes'));
 app.use('/api/users', require('./routes/usersRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
-
 
 
 // --------------=====================  RUN SERVER  =====================-------------- 
