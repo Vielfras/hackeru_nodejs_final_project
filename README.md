@@ -111,7 +111,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 
 # Actionable Tasks
 
-## User Endpoints
+## 1. User Endpoints
 1. **Register User**:
    - [ ] Create a POST route `/users` for user registration.
    - [ ] Encrypt the user's password before saving.
@@ -135,7 +135,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 7. **Delete User**:
    - [ ] Create a DELETE route `/users/:id` to delete a user (accessible by the user or admin).
 
-## Cards Endpoints
+## 2. Cards Endpoints
 1. **Get All Cards**:
    - [ ] Create a GET route `/cards` to fetch all cards.
 
@@ -157,41 +157,45 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 7. **Delete Card**:
    - [ ] Create a DELETE route `/cards/:id` to delete a card (accessible by the card creator or admin).
 
-### Logger
+### 3. Logger
 - [X] Implement a logger using `morgan` to log all HTTP requests with detailed information.
 
-### Chalk
-- [ ] Use `chalk` to add colors to console outputs for better readability.
+### 4. Chalk
+- [X] Use `chalk` to add colors to console outputs for better readability.
 
-### CORS
-- [ ] Enable CORS to allow requests from specific origins.
+### 5. CORS
+- [X] Enable CORS to allow requests from specific origins.
 
-### JSON Handling
-- [ ] Ensure the application can handle JSON in HTTP requests.
+### 6. JSON Handling
+- [X] Ensure the application can handle JSON in HTTP requests.
 
-### Public Directory
+### 7. Public Directory
 - [ ] Route unhandled requests to the public directory and return a 404 error for missing files.
 
-### Environments
-- [ ] Configure the application to support both local and cloud (MongoDB Atlas) environments.
+### 8. Environments
+- [X] Configure the application to support both local and cloud (MongoDB Atlas) environments.
 
-### Error Handling
+### 9. Error Handling
 - [ ] Implement error handling to return appropriate HTTP status and error messages.
 
-### Joi Validation
-- [ ] Use `joi` to validate incoming objects from the client and handle validation errors.
+### 10. Joi Validation
+- [X] Use `joi` to validate incoming objects from the client and handle validation errors.
 
-### Bcryptjs
-- [ ] Encrypt passwords using `bcryptjs` before storing them and verify passwords during login.
+### 11. Bcryptjs
+- [X] Encrypt passwords using `bcryptjs` before storing them and verify passwords during login.
 
-### JWT Token
-- [ ] Use `jsonwebtoken` to create and validate JWT tokens containing user information.
+### 12. JWT Token
+- [X] Use `jsonwebtoken` to create and validate JWT tokens containing user information.
 
-### Initial Data
-- [ ] Seed the database with initial data including three user types and three business cards.
+### 13. Initial Data
+- [X] Seed the database with initial data including three user types and three business cards.
 
-### Mongoose Models
-- [ ] Create `Users` and `Cards` models using `mongoose` with the appropriate schema.
+### 14. Mongoose Models
+- [X] Create `Users` and `Cards` models using `mongoose` with the appropriate schema.
+
+<br>
+
+---
 
 ### Bonus Tasks
 1. **Admin Change Business Number**:
@@ -205,3 +209,10 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 
 4. **User Blocking**:
    - [ ] Implement a mechanism to block users for 24 hours after three failed login attempts with incorrect password.
+
+
+
+### Final Requirements Before Submitting:
+- [ ] Remove redundant comments
+- [ ] Remove redundant console.logs
+- [ ] Refactor where relevant
