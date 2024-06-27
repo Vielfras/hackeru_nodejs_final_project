@@ -2,12 +2,7 @@
 
 const schemas = require("../schemas/cardsSchema");
 const Card = require("../models/Card");
-
-// TODO - Move this to separate error handling module
-const errToString = (error) => {
-  const errorsArray = error.details.map((err) => err.message);
-  return { success: false, message: errorsArray };
-};
+const Err = require("../utils/errorHandling");
 
 
 const getAllCards = async (req, res) => {
@@ -25,7 +20,6 @@ const getAllCards = async (req, res) => {
   }
 };
 
-
 const getUserCards = async (req, res) => {
   //  TODO - Implemnt this.
   try {
@@ -35,10 +29,7 @@ const getUserCards = async (req, res) => {
       data: allUserCards,
     });
   } catch (err) {
-    return res.status(400).json({
-      success: false,
-      message: err.message,
-    });
+    return res.status(400).json({ success: false, message: err.message, });
   }
 };
 
@@ -58,6 +49,7 @@ const getCardById = async (req, res) => {
       message: `Card id '${id}' not found.`,
     });
   } catch (err) {
+
     return res.status(400).json({
       success: false,
       message: "Invalid format for card id.",
@@ -67,9 +59,9 @@ const getCardById = async (req, res) => {
 
 const searchInCards = async (req, res) => {
   const { error, value } = schemas.searchCard.validate(req.body);
-  
+
   if (error) {
-    return res.status(400).json(errToString(error));
+    return res.status(400).json(Err.multipleErrToString(error));
   }
 
   const { searchTerm, searchFields } = value;
@@ -86,9 +78,9 @@ const searchInCards = async (req, res) => {
 
 const createNewCard = async (req, res) => {
   const { error, value } = schemas.createNewCard.validate(req.body);
-  
+
   if (error) {
-    return res.status(400).json(errToString(error));
+    return res.status(400).json(Err.multipleErrToString(error));
   }
 
   const newCard = new Card(value);
@@ -125,7 +117,7 @@ const updateCard = async (req, res) => {
   const { error, value } = schemas.updateCard.validate(req.body);
 
   if (error) {
-    return res.status(400).json(errToString(error));
+    return res.status(400).json(Err.multipleErrToString(error));
   }
 
   const { id } = req.params;

@@ -1,8 +1,9 @@
+// User.js
+
 const mongoose = require("mongoose");
 const { addressSchema, imageSchema, nameSchema } = require("./common");
 
-// define a mongoose schema:
-// this describes the shape of one 'user' in our users collection.
+
 const userSchema = new mongoose.Schema(
   {
     name: nameSchema,
@@ -19,8 +20,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// compile the schema into a model.
-// we will use this model to access our users collection.
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
