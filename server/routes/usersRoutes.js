@@ -1,3 +1,5 @@
+//userRoutes.js
+
 const router = require('express').Router();
 const { getAllUsers, getUserById, /*searchInUsers,*/ createNewUser, deleteUser, updateUser } = require('../controllers/usersControllers');
 const { mustLogin, allowedRoles } = require('../controllers/authControllers');

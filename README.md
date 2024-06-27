@@ -139,7 +139,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 - [X] Configure the application to support both local and cloud (MongoDB Atlas) environments.
 
 ### 9. Error Handling
-- [ ] Implement error handling to return appropriate HTTP status and error messages.
+- [X] Implement error handling to return appropriate HTTP status and error messages.
 
 ### 10. Joi Validation
 - [X] Use `joi` to validate incoming objects from the client and handle validation errors.
