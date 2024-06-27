@@ -31,6 +31,8 @@ This project involves creating a **REST API** using **Node.js** to enhance under
 IP="<desired_ip>"
 PORT = <desired_port>
 
+LOG_FILE_PATH = "your_file_path"
+
 JWT_SECRET = "secret_here"
 JWT_EXPIRES_IN = "10m" 
 

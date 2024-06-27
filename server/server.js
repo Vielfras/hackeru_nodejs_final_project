@@ -1,11 +1,11 @@
-// Require
-require('dotenv').config();
+// server.js 
+
 
 // 1st Party
-const fs = require('fs');
 const path = require('path');
 
 // 3rd Party - Base
+require('dotenv').config();
 const cors = require('cors');
 const morgan = require('morgan');
 const express = require('express');
@@ -15,11 +15,14 @@ const chalk = require('chalk');
 
 // Mine
 const connectDB = require('./config/db');
+const { logToFile, setupDevelopmentLogging } = require('./controllers/loggingController'); // Import the functions
 
-
-// --------------=====================  INIT  =====================-------------- 
+// --------------=====================  INIT  =====================--------------
 const SERVER_MODE = process.env.NODE_ENV;
-const { IP, PORT } = process.env;
+const { IP, PORT, LOG_FILE_PATH} = process.env;
+
+
+// TODO - Move IP & PORT validation to seperate file
 const isValidIP = (ip) => {
   return true;
 };
@@ -30,63 +33,37 @@ const isValidPort = (port) => {
 
 if (!IP || !isValidIP(IP)) {
   console.error(chalk.red('Error: Invalid or undefined IP address in the environment variables.'));
+  console.error(chalk.red(`Invalid IP: ${IP}`));
   process.exit(1);
 }
 
 if (!PORT || !isValidPort(PORT)) {
   console.error(chalk.red('Error: Invalid or undefined port in the environment variables.'));
+  console.error(chalk.red(`Invalid PORT: ${PORT}`));
   process.exit(1);
 }
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/log.log'), { flags: 'a' })
+const accessLogStream = logToFile(path.join(__dirname, LOG_FILE_PATH));
 
 const app = express();
 
-
-// --------------=====================  MIDDLEWARE  =====================-------------- 
+// --------------=====================  MIDDLEWARE  =====================--------------
 app.use(cors());
 app.use(express.json());
 
-
+app.use(morgan('combined', { stream: accessLogStream }));
 if (SERVER_MODE !== 'prod') {
-  morgan.token('statusColor', (req, res) => {
-    const status = res.statusCode;
-    const color =
-      status >= 500 ? 'red' :
-      status >= 400 ? 'yellow' :
-      status >= 300 ? 'cyan' :
-      status >= 200 ? 'green' :
-      'white';
-    return chalk[color](status);
-  });
-
-  morgan.token('date', (req, res, format) => {
-    return chalk.magenta(new Date().toLocaleString());
-  });
-
-  app.use(morgan((tokens, req, res) => {
-    return [
-      tokens.date(req, res),
-      chalk.blue(tokens.method(req, res)),
-      chalk.green(tokens.url(req, res)),
-      tokens.statusColor(req, res), 
-      chalk.cyan(tokens['remote-addr'](req, res)),
-      chalk.magenta(tokens['response-time'](req, res) + ' ms'),
-    ].join(' ');
-  }));
+  setupDevelopmentLogging(app);
 }
 
-app.use(morgan('combined', { stream: accessLogStream }))
 app.use(express.static('static'));
 
-
-// --------------=====================  ROUTES  =====================-------------- 
+// --------------=====================  ROUTES  =====================--------------
 app.use('/api/cards', require('./routes/cardsRoutes'));
 app.use('/api/users', require('./routes/usersRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 
-
-// --------------=====================  RUN SERVER  =====================-------------- 
+// --------------=====================  RUN SERVER  =====================--------------
 connectDB().then(() => {
   app.listen(PORT, IP, () => {
     console.log(chalk.bold.bgGreenBright(`Server is listening for requests on http://${IP}:${PORT}`));
