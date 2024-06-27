@@ -130,6 +130,7 @@ const updateCard = async (req, res) => {
 
   const { id } = req.params;
 
+  // TODO - Move this inside the try/catch
   let updated;
 
   try {

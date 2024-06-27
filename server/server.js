@@ -60,6 +60,7 @@ if (SERVER_MODE !== 'prod') {
 }
 
 app.use(express.static('static'));
+app.use(express.static('public'));
 
 
 // --------------=====================  ROUTES  =====================--------------

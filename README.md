@@ -133,7 +133,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 - [X] Ensure the application can handle JSON in HTTP requests.
 
 ### 7. Public Directory
-- [ ] Route unhandled requests to the public directory and return a 404 error for missing files.
+- [X] Route unhandled requests to the public directory and return a 404 error for missing files.
 
 ### 8. Environments
 - [X] Configure the application to support both local and cloud (MongoDB Atlas) environments.
