@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const { addressSchema, imageSchema } = require("./common");
 const { ref } = require("joi");
 
-// define a mongoose schema:
-// this describes the shape of one 'card' in our cards collection.
 const cardSchema = new mongoose.Schema(
   {
     title: String,
@@ -94,6 +92,7 @@ const cardSchema = new mongoose.Schema(
   /**
    * @param {string} searchTerm - Your search term (case insensitive)   : 'your search term'
    * @param {Array.<String>} searchFields - The fields to search inside : ['title','email',...]
+   * @returns {Array.<String>} - Found cards or an empty array if no cards found.
    */
 
   cardSchema.statics.multipleFieldsStringSearch = function(searchTerm,searchFields) {

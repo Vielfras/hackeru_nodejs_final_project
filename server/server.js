@@ -1,6 +1,6 @@
 // server.js 
 
-
+// --------------=====================  DEPENDENCIES  =====================--------------
 // 1st Party
 const path = require('path');
 
@@ -15,37 +15,40 @@ const chalk = require('chalk');
 
 // Mine
 const connectDB = require('./config/db');
-const { logToFile, setupDevelopmentLogging } = require('./controllers/loggingController'); // Import the functions
+const { logToFile, setupDevelopmentLogging } = require('./controllers/loggingController');
+
 
 // --------------=====================  INIT  =====================--------------
 const SERVER_MODE = process.env.NODE_ENV;
-const { IP, PORT, LOG_FILE_PATH} = process.env;
-
+const { IP, PORT, LOG_FILE_PATH } = process.env;
 
 // TODO - Move IP & PORT validation to seperate file
-const isValidIP = (ip) => {
-  return true;
-};
+{
+  const isValidIP = (ip) => {
+    return true;
+  };
 
-const isValidPort = (port) => {
-  return true;
-};
+  const isValidPort = (port) => {
+    return true;
+  };
 
-if (!IP || !isValidIP(IP)) {
-  console.error(chalk.red('Error: Invalid or undefined IP address in the environment variables.'));
-  console.error(chalk.red(`Invalid IP: ${IP}`));
-  process.exit(1);
-}
+  if (!IP || !isValidIP(IP)) {
+    console.error(chalk.red('Error: Invalid or undefined IP address in the environment variables.'));
+    console.error(chalk.red(`Invalid IP: ${IP}`));
+    process.exit(1);
+  }
 
-if (!PORT || !isValidPort(PORT)) {
-  console.error(chalk.red('Error: Invalid or undefined port in the environment variables.'));
-  console.error(chalk.red(`Invalid PORT: ${PORT}`));
-  process.exit(1);
+  if (!PORT || !isValidPort(PORT)) {
+    console.error(chalk.red('Error: Invalid or undefined port in the environment variables.'));
+    console.error(chalk.red(`Invalid PORT: ${PORT}`));
+    process.exit(1);
+  }
 }
 
 const accessLogStream = logToFile(path.join(__dirname, LOG_FILE_PATH));
 
 const app = express();
+
 
 // --------------=====================  MIDDLEWARE  =====================--------------
 app.use(cors());
@@ -58,10 +61,12 @@ if (SERVER_MODE !== 'prod') {
 
 app.use(express.static('static'));
 
+
 // --------------=====================  ROUTES  =====================--------------
 app.use('/api/cards', require('./routes/cardsRoutes'));
 app.use('/api/users', require('./routes/usersRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
+
 
 // --------------=====================  RUN SERVER  =====================--------------
 connectDB().then(() => {

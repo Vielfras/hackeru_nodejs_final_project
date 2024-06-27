@@ -42,7 +42,7 @@ MONGODB_URI_DEV = "mongodb://<path_to_your_db>"
 MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 ```
 
-5. [OPTIONAL] Seed you project by running `node seed.js` with data found in `./data/data.js`
+5. **[OPTIONAL]** Seed you project by running `node seed.js` with data found in `./data/data.js`
    - This may require setting ENV VARIABLE manually or updating packages.json with seed.js instead of server.js and then running the next step.
 6. To start the server run:
 `npm run dev` for development environment or `npm run prod` for production environment.
@@ -99,13 +99,13 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 
 ## 2. Cards Endpoints
 1. **Get All Cards**:
-   - [ ] Create a GET route `/cards` to fetch all cards.
+   - [X] Create a GET route `/cards` to fetch all cards.
 
 2. **Get User Cards**:
    - [ ] Create a GET route `/cards/my-cards` to fetch cards created by the logged-in user.
 
 3. **Get Card by ID**:
-   - [ ] Create a GET route `/cards/:id` to fetch a card by ID.
+   - [X] Create a GET route `/cards/:id` to fetch a card by ID.
 
 4. **Create New Card**:
    - [ ] Create a POST route `/cards` for business users to create new cards.
