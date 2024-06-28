@@ -35,6 +35,7 @@ class Test {
     }
 }
 
+
 const registerUser = async () => {
     return await fetch(`${baseUrl}/api/auth/register`, {
         method: 'POST',
@@ -42,13 +43,13 @@ const registerUser = async () => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: { first: 'John', last: 'Doe' },
-            phone: '0501234567',
-            email: 'john.doe@example.com',
-            password: 'Password123!',
-            image: { url: 'http://example.com/profile.jpg', alt: 'Profile Image' },
-            address: { state: 'CA', country: 'USA', city: 'Los Angeles', street: 'Main', houseNumber: 123, zip: '90001' },
-            isBusiness: true
+            "name": { "first": "John", "last": "Doe" },
+            "phone": "0501234567",
+            "email": "john.doe@example.com",
+            "password": "Password123!",
+            "image": { url: "http://example.com/profile.jpg", alt: "Profile Image" },
+            "address": { "state": "CA", "country": "USA", "city": "Los Angeles", "street": "Main", "houseNumber": 123, "zip": "90001" },
+            "isBusiness": true
         })
     });
 };
@@ -74,14 +75,14 @@ const createCard = async (token) => {
             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-            title: 'Business Card',
-            subtitle: 'CEO',
-            description: 'Business card description',
-            phone: '0501234567',
-            email: 'business@example.com',
-            web: 'http://example.com',
-            image: { url: 'http://example.com/image.jpg', alt: 'Business Image' },
-            address: { state: 'CA', country: 'USA', city: 'Los Angeles', street: 'Main', houseNumber: 123, zip: '90001' }
+            "title" : "Business Card",
+            "subtitle" : "CEO",
+            "description" : "Business card description",
+            "phone" : "0501234567",
+            "email" : "business@example.com",
+            "web" : "http://example.com",
+            "image" : { "url" : "http://example.com/image.jpg", "alt" : "Business Image" },
+            "address" : { "state" : "CA", "country" : "USA", "city" : "Los Angeles", "street" : "Main", "houseNumber" : 123, "zip" : "90001" }
         })
     });
 };
