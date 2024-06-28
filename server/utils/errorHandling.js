@@ -1,4 +1,7 @@
 // errorHandling.js
+const notLoggedIn = () => {
+    return { sucees: false, message: 'Forbidden: Must be logged-in to view this content.' };
+}
 
 const userNotFound = (searchedId) => {
     return res.status(404).json({ 
@@ -13,6 +16,7 @@ const multipleErrToString = (error) => {
 };
 
 module.exports = {
+    notLoggedIn,
     userNotFound, 
     multipleErrToString,
 };

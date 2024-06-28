@@ -85,7 +85,6 @@ const login = async (req, res) => {
   }
 };
 
-
 const myProfile = async (req, res) => {
   try {
     console.log("req.user.id=", req.user.id)
@@ -100,7 +99,7 @@ const myProfile = async (req, res) => {
 const mustLogin = (req, res, next) => {
   const token = req.header('x-auth-token')
   if (!token) {
-    return res.status(403).json({ sucees: false, message: 'Forbidden: Must be logged-in to view this content.' })
+    return res.status(403).json(Err.notLoggedIn());
   }
 
   try {
@@ -109,7 +108,7 @@ const mustLogin = (req, res, next) => {
 
     return next();
   } catch (err) {
-    return res.status(403).json({ sucees: false, message: 'Forbidden: Must be logged-in to view this content.' })
+    return res.status(403).json(Err.notLoggedIn());
   }
 }
 
@@ -123,9 +122,9 @@ const allowedRoles = (allowedRoles) => {
     if (allowedRoles.length === 0) {
       throw new Error('Error: allowedRoles must contain at-least one element.');
     }
-    // double-check that the user is actually logged-in
+
     if (!req.user) {
-      return res.status(403).json({ sucees: false, message: 'Forbidden: you must be logged-in to view this content' })
+      return res.status(403).json(Err.notLoggedIn());
     }
 
     const { isBusiness, isAdmin } = req.user;
