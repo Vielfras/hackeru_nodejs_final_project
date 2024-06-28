@@ -1,0 +1,72 @@
+$primary-color: #4CAF50;
+$secondary-color: #f44336;
+$font-family: Arial, sans-serif;
+
+body {
+    font-family: $font-family;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: $primary-color;
+    text-align: center;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    background-color: $primary-color;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
+}
+
+textarea {
+    width: 96.5%;
+    height: 500px;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+    background-color: #f9f9f9;
+    font-family: $font-family;
+    font-size: 14px;
+}
+
+
+.success {
+    color: green;
+}
+
+.fail {
+    color: red;
+}
+
+.output {
+    white-space: pre-wrap;
+    font-family: monospace;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}

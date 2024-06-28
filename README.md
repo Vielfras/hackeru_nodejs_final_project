@@ -75,12 +75,12 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 
 ## 1. User Endpoints
 1. **Register User**:
-   - [ ] Create a POST route `/users` for user registration.
-   - [ ] Encrypt the user's password before saving.
+   - [X] Create a POST route `/users` for user registration.
+   - [X] Encrypt the user's password before saving.
 
 2. **Login User**:
-   - [ ] Create a POST route `/users/login` for user login.
-   - [ ] Validate the user's password and generate a JWT token.
+   - [X] Create a POST route `/users/login` for user login.
+   - [X] Validate the user's password and generate a JWT token.
 
 3. **Get All Users**:
    - [ ] Create a GET route `/users` to fetch all users (Admin access only).
