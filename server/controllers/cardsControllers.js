@@ -21,15 +21,20 @@ const getAllCards = async (req, res) => {
 };
 
 const getUserCards = async (req, res) => {
-  //  TODO - Implemnt this.
   try {
-    const allUserCards = await Card.find({});
+    // Assuming req.user is populated by mustLogin middleware
+    const userId = req.user.id; 
+    console.log(userId);
+    const userCards = await Card.find({ user_id: userId });
     return res.status(200).json({
       success: true,
-      data: allUserCards,
+      data: userCards,
     });
   } catch (err) {
-    return res.status(400).json({ success: false, message: err.message, });
+    return res.status(400).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
 
@@ -49,7 +54,6 @@ const getCardById = async (req, res) => {
       message: `Card id '${id}' not found.`,
     });
   } catch (err) {
-
     return res.status(400).json({
       success: false,
       message: "Invalid format for card id.",

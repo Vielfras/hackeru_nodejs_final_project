@@ -102,7 +102,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
    - [X] Create a GET route `/cards` to fetch all cards.
 
 2. **Get User Cards**:
-   - [ ] Create a GET route `/cards/my-cards` to fetch cards created by the logged-in user.
+   - [X] Create a GET route `/cards/my-cards` to fetch cards created by the logged-in user.
 
 3. **Get Card by ID**:
    - [X] Create a GET route `/cards/:id` to fetch a card by ID.
