@@ -81,12 +81,9 @@ const createNewUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPassword;
 
-    // save user to database
     const saved = await newUser.save();
-
-    // convert the document (created user) to standard javascript object
     const savedObject = saved.toObject();
-    // now we can delete the 'password' key before returning the object to the user
+    // Delete 'password' key before returning object to user
     delete savedObject.password;
 
     return res.status(201).json({
@@ -94,7 +91,7 @@ const createNewUser = async (req, res) => {
       created: savedObject,
     });
   } catch (err) {
-    // handle duplicate (existing) email
+    // handle duplicate email
     if (err.code === 11000) {
       return res.status(409)
         .json({ success: false, message: `Email ${newUser.email} is already registered! Consider logging in.` })
@@ -105,8 +102,14 @@ const createNewUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
+  const requestingUser = req.user;
 
   try {
+    // Check if the requesting user is an admin or requesting their own data
+    if (requestingUser.id !== id && !requestingUser.isAdmin) {
+      return res.status(403).json({ success: false, message: "Access denied. You can only access your own data." });
+    }
+
     const deleted = await User.findByIdAndDelete(id).select('-password').exec();
     if (!deleted) throw new Error();
 

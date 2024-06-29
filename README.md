@@ -95,7 +95,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
    - [X] Create a PATCH route `/users/:id` to change business status (accessible by the user).
 
 7. **Delete User**:
-   - [ ] Create a DELETE route `/users/:id` to delete a user (accessible by the user or admin).
+   - [X] Create a DELETE route `/users/:id` to delete a user (accessible by the user or admin).
 
 ## 2. Cards Endpoints
 1. **Get All Cards**:
