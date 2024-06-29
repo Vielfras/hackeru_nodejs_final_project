@@ -87,10 +87,17 @@ const createNewCard = async (req, res) => {
     return res.status(400).json(Err.multipleErrToString(error));
   }
 
-  const newCard = new Card(value);
-  newCard.bizNumber = await Card.getNextBizNumber();
-
   try {
+    const existingCard = await Card.findOne({ title: value.title, email: value.email, user_id: req.user.id });
+    if (existingCard) {
+      return res.status(409).json({ success: false, message: `You already have a card with the title "${value.title}" and email "${value.email}".` });
+    }
+
+    
+    const newCard = new Card(value);
+    newCard.user_id = req.user.id;
+    newCard.bizNumber = await Card.getNextBizNumber();
+
     const saved = await newCard.save();
 
     return res.status(201).json({

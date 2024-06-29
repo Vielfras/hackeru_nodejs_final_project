@@ -13,7 +13,6 @@ const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
 const ROLES = {
   ADMIN: 'admin',
   BUSINESS: 'business',
-  BIZ: 'biz',
   USER: 'user'
 };
 
@@ -137,8 +136,8 @@ const allowedRoles = (allowedRoles) => {
     const { isBusiness, isAdmin } = req.user;
 
     let hasRole = false;
-    if (allowedRoles.includes('business') && isBusiness) hasRole = true;
-    if (allowedRoles.includes('admin') && isAdmin) hasRole = true;
+    if (allowedRoles.includes(ROLES.BUSINESS) && isBusiness) hasRole = true;
+    if (allowedRoles.includes(ROLES.ADMIN) && isAdmin) hasRole = true;
 
     if (!hasRole) {
       const allowedRolesString = allowedRoles.join('/')

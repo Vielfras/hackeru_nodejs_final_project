@@ -108,7 +108,8 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
    - [X] Create a GET route `/cards/:id` to fetch a card by ID.
 
 4. **Create New Card**:
-   - [ ] Create a POST route `/cards` for business users to create new cards.
+   - [X] Create a POST route `/cards` for business users to create new cards.
+   - [X] Prevent duplicate cards from being created.
 
 5. **Edit Card**:
    - [ ] Create a PUT route `/cards/:id` to edit a card (accessible by the card creator).
