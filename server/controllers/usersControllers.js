@@ -119,6 +119,10 @@ const deleteUser = async (req, res) => {
   }
 };
 
+
+// TODO - Add some way to update onlt the field that was sent
+//        as now it's possible to only send on field of a user and all the rest will be deleted.
+//        EX. Sending only the first name, will delete the middle and the last.
 const updateUser = async (req, res) => {
   const { error, value } = schemas.updateUser.validate(req.body);
   if (error) {

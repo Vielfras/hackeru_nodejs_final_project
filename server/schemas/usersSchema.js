@@ -37,6 +37,11 @@ const userSchema = Joi.object().keys({
 }).options(validationOptions);
 
 const updateUserSchema = Joi.object().keys({
+  name: Joi.object().keys({
+    first: Joi.string().optional(),
+    middle: Joi.string().optional().default(""),
+    last: Joi.string().optional(),
+  }),
   phone: Joi.string().pattern(phonePattern, { name: 'cellphone number' }).optional(),
   password: Joi.string().pattern(passwordPattern, { name: 'password' }).optional(),
   image: Joi.object().keys({
