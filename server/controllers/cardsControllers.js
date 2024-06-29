@@ -23,7 +23,7 @@ const getAllCards = async (req, res) => {
 const getUserCards = async (req, res) => {
   try {
     // Assuming req.user is populated by mustLogin middleware
-    const userId = req.user.id; 
+    const userId = req.user.id;
     console.log(userId);
     const userCards = await Card.find({ user_id: userId });
     return res.status(200).json({
@@ -93,7 +93,7 @@ const createNewCard = async (req, res) => {
       return res.status(409).json({ success: false, message: `You already have a card with the title "${value.title}" and email "${value.email}".` });
     }
 
-    
+
     const newCard = new Card(value);
     newCard.user_id = req.user.id;
     newCard.bizNumber = await Card.getNextBizNumber();
@@ -112,10 +112,20 @@ const createNewCard = async (req, res) => {
 const deleteCard = async (req, res) => {
   const { id } = req.params;
 
+  const userId = req.user.id;
+  const isAdmin = req.user.isAdmin;
+
   try {
-    const deleted = await Card.findByIdAndDelete(id);
+    let deleted;
+
+    if (isAdmin) {
+      deleted = await Card.findByIdAndDelete(id);
+    } else {
+      deleted = await Card.findOneAndDelete({ _id: id, user_id: userId });
+    }
+
     if (!deleted) {
-      throw new Error();
+      return res.status(404).json({ success: false, message: `Card id ${id} not found or you are not authorized to delete it.` });
     }
 
     return res.status(200).json({ success: true, deleted: deleted });
