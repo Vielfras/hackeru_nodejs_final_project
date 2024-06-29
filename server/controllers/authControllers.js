@@ -10,6 +10,13 @@ const Err = require("../utils/errorHandling");
 
 const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
 
+const ROLES = {
+  ADMIN: 'admin',
+  BUSINESS: 'business',
+  BIZ: 'biz',
+  USER: 'user'
+};
+
 
 const register = async (req, res) => {
   const { error, value } = schemas.createNewUser.validate(req.body);
@@ -149,4 +156,5 @@ module.exports = {
   myProfile,
   mustLogin,
   allowedRoles,
+  ROLES,
 };

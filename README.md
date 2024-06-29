@@ -86,7 +86,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
    - [X] Create a GET route `/users` to fetch all users **(Admin access only)**.
 
 4. **Get User by ID**:
-   - [ ] Create a GET route `/users/:id` to fetch a user by ID (accessible by the user or admin).
+   - [X] Create a GET route `/users/:id` to fetch a user by ID (accessible by the user or admin).
 
 5. **Edit User**:
    - [ ] Create a PUT route `/users/:id` to edit user details (accessible by the user).

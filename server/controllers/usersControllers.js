@@ -21,8 +21,14 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
+  const requestingUser = req.user;
 
   try {
+    // Check if the requesting user is an admin or requesting their own data
+    if (requestingUser.id !== id && !requestingUser.isAdmin) {
+      return res.status(403).json({ success: false, message: "Access denied. You can only access your own data." });
+    }
+
     const found = await User.findById(id).select('-password').exec();
     if (!found) {
       return Err.userNotFound(id);
@@ -33,7 +39,7 @@ const getUserById = async (req, res) => {
       data: found,
     });
   } catch (err) {
-    return res.status(400).json({ success: false, message: "Invalid format for user id.",});
+    return res.status(400).json({ success: false, message: "Invalid format for user id.", });
   }
 };
 
