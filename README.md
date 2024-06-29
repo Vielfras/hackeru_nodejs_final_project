@@ -118,7 +118,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
    - [ ] Create a PATCH route `/cards/:id` to like a card (accessible by registered users).
 
 7. **Delete Card**:
-   - [ ] Create a DELETE route `/cards/:id` to delete a card (accessible by the card creator or admin).
+   - [X] Create a DELETE route `/cards/:id` to delete a card (accessible by the card creator or admin).
 
 ### 3. Logger
 - [X] Implement a logger using `morgan` to log all HTTP requests with detailed information.

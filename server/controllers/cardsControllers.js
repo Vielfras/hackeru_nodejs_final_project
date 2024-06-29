@@ -136,17 +136,48 @@ const deleteCard = async (req, res) => {
 
 const updateCard = async (req, res) => {
   const { error, value } = schemas.updateCard.validate(req.body);
-
   if (error) {
     return res.status(400).json(Err.multipleErrToString(error));
   }
 
   const { id } = req.params;
 
-  // TODO - Move this inside the try/catch
-  let updated;
+  const userId = req.user.id;
+  const isAdmin = req.user.isAdmin;
 
   try {
+    let updated;
+
+    if (isAdmin) {
+      updated = await Card.findByIdAndUpdate(id, value, { new: true });
+    } else {
+      updated = await Card.findOneAndUpdate({ _id: id, user_id: userId }, value, { new: true });
+    }
+
+    if (!updated) {
+      return res.status(404).json({ success: false, message: `Card id ${id} was not found.` });
+    }
+
+    return res.status(200).json({
+      success: true,
+      updated: updated,
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `Failed to retrieve card due to: ${err.message}.` });
+  }
+};
+
+const likeCard = async (req, res) => {
+  const { error, value } = schemas.updateCard.validate(req.body);
+  if (error) {
+    return res.status(400).json(Err.multipleErrToString(error));
+  }
+
+  const { id } = req.params;
+
+  try {
+    let updated;
+
     updated = await Card.findByIdAndUpdate(id, value, { new: true });
     if (!updated) {
       return res.status(404).json({ success: false, message: `Card id ${id} was not found.` });
@@ -157,7 +188,7 @@ const updateCard = async (req, res) => {
       updated: updated,
     });
   } catch (err) {
-    return res.status(404).json({ success: false, message: `Card id ${id} was not found.` });
+    return res.status(500).json({ success: false, message: `Failed to retrieve card due to: ${err.message}.` });
   }
 };
 
@@ -170,4 +201,5 @@ module.exports = {
   createNewCard,
   deleteCard,
   updateCard,
+  likeCard,
 };
