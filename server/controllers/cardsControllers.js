@@ -134,7 +134,7 @@ const deleteCard = async (req, res) => {
   }
 };
 
-const updateCard = async (req, res) => {
+const editCard = async (req, res) => {
   const { error, value } = schemas.updateCard.validate(req.body);
   if (error) {
     return res.status(400).json(Err.multipleErrToString(error));
@@ -146,51 +146,56 @@ const updateCard = async (req, res) => {
   const isAdmin = req.user.isAdmin;
 
   try {
-    let updated;
+    let editedCard;
 
     if (isAdmin) {
-      updated = await Card.findByIdAndUpdate(id, value, { new: true });
+      editedCard = await Card.findByIdAndUpdate(id, value, { new: true });
     } else {
-      updated = await Card.findOneAndUpdate({ _id: id, user_id: userId }, value, { new: true });
+      editedCard = await Card.findOneAndUpdate({ _id: id, user_id: userId }, value, { new: true });
     }
 
-    if (!updated) {
+    if (!editedCard) {
       return res.status(404).json({ success: false, message: `Card id ${id} was not found.` });
     }
 
     return res.status(200).json({
       success: true,
-      updated: updated,
+      editedCard: editedCard,
     });
   } catch (err) {
     return res.status(500).json({ success: false, message: `Failed to retrieve card due to: ${err.message}.` });
   }
 };
 
-const likeCard = async (req, res) => {
-  const { error, value } = schemas.updateCard.validate(req.body);
-  if (error) {
-    return res.status(400).json(Err.multipleErrToString(error));
-  }
-
+const toggleCardLike = async (req, res) => {
   const { id } = req.params;
+  const userId = req.user.id;
 
   try {
-    let updated;
-
-    updated = await Card.findByIdAndUpdate(id, value, { new: true });
-    if (!updated) {
-      return res.status(404).json({ success: false, message: `Card id ${id} was not found.` });
+    const card = await Card.findById(id);
+    if (!card) {
+      return res.status(404).json({ success: false, message: `Card id ${id} not found.` });
     }
+
+    const userIndex = card.likes.indexOf(userId);
+
+    if (userIndex === -1) {
+      card.likes.push(userId);
+    } else {
+      card.likes.splice(userIndex, 1);
+    }
+
+    await card.save();
 
     return res.status(200).json({
       success: true,
-      updated: updated,
+      likes: card.likes,
     });
   } catch (err) {
-    return res.status(500).json({ success: false, message: `Failed to retrieve card due to: ${err.message}.` });
+    return res.status(500).json({ success: false, message: `Failed to toggle like due to: ${err.message}.` });
   }
 };
+
 
 
 module.exports = {
@@ -200,6 +205,6 @@ module.exports = {
   searchInCards,
   createNewCard,
   deleteCard,
-  updateCard,
-  likeCard,
+  editCard,
+  toggleCardLike,
 };

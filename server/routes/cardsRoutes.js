@@ -2,7 +2,7 @@
 
 const router = require('express').Router();
 const { mustLogin, allowedRoles, ROLES } = require('../controllers/authControllers');
-const { getAllCards, getCardById, searchInCards, getUserCards, createNewCard, deleteCard, updateCard, likeCard } = require('../controllers/cardsControllers');
+const { getAllCards, getCardById, searchInCards, getUserCards, createNewCard, deleteCard, editCard, toggleCardLike } = require('../controllers/cardsControllers');
 
 //  Base path = "/api/cards"
 
@@ -16,8 +16,8 @@ router.post('/search', searchInCards)
 //  UNspecific
 router.get('/:id', getCardById)
 router.delete('/:id', mustLogin, deleteCard)
-router.put('/:id', mustLogin, updateCard)
-router.patch('/:id', mustLogin, likeCard)
+router.put('/:id', mustLogin, editCard)
+router.patch('/:id', mustLogin, toggleCardLike)
 
 
 module.exports = router;

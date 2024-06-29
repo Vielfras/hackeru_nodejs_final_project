@@ -112,10 +112,10 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
    - [X] Prevent duplicate cards from being created.
 
 5. **Edit Card**:
-   - [ ] Create a PUT route `/cards/:id` to edit a card (accessible by the card creator).
+   - [X] Create a PUT route `/cards/:id` to edit a card (accessible by the card creator).
 
 6. **Like Card**:
-   - [ ] Create a PATCH route `/cards/:id` to like a card (accessible by registered users).
+   - [X] Create a PATCH route `/cards/:id` to like a card (accessible by registered users).
 
 7. **Delete Card**:
    - [X] Create a DELETE route `/cards/:id` to delete a card (accessible by the card creator or admin).
@@ -167,6 +167,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 
 2. **File Logger**:
    - [ ] Create a file logger for requests with status codes 400 and above.
+   - [ ] A new file should be created for every day, with the name of the file the date.
 
 3. **Google API Integration**:
    - [ ] Allow Google API-based registration and login for non-admin and non-business users.
