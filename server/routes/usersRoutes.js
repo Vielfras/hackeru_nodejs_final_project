@@ -1,14 +1,16 @@
 //userRoutes.js
 
 const router = require('express').Router();
-const { getAllUsers, getUserById, /*searchInUsers,*/ createNewUser, deleteUser, updateUser, updateUserBusinessStatus } = require('../controllers/usersControllers');
-const { mustLogin, allowedRoles, ROLES } = require('../controllers/authControllers');
+const { getAllUsers, getUserById, /*searchInUsers,*/ /*createNewUser,*/ deleteUser, updateUser, updateUserBusinessStatus } = require('../controllers/usersControllers');
+const { login, register, mustLogin, allowedRoles, ROLES } = require('../controllers/authControllers');
 
 // base path = "/api/users"
 
 // SPECIFIC
 router.get('/', mustLogin, allowedRoles([ROLES.ADMIN]), getAllUsers);
-router.post('/', createNewUser);
+
+router.post('/', register);
+router.post('/login', login);
 
 //router.post('/search', searchInUsers)
 

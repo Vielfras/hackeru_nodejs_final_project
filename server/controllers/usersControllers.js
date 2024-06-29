@@ -69,36 +69,37 @@ const getUserById = async (req, res) => {
 //   }
 // };
 
-const createNewUser = async (req, res) => {
-  const { error, value } = schemas.createNewUser.validate(req.body);
-  if (error) {
-    return res.status(400).json(Err.multipleErrToString(error));
-  }
+// TODO - This is a duplicate of auth/register
+// const createNewUser = async (req, res) => {
+//   const { error, value } = schemas.createNewUser.validate(req.body);
+//   if (error) {
+//     return res.status(400).json(Err.multipleErrToString(error));
+//   }
 
-  const newUser = new User(value);
+//   const newUser = new User(value);
 
-  try {
-    const hashedPassword = await bcrypt.hash(newUser.password, 10);
-    newUser.password = hashedPassword;
+//   try {
+//     const hashedPassword = await bcrypt.hash(newUser.password, 10);
+//     newUser.password = hashedPassword;
 
-    const saved = await newUser.save();
-    const savedObject = saved.toObject();
-    // Delete 'password' key before returning object to user
-    delete savedObject.password;
+//     const saved = await newUser.save();
+//     const savedObject = saved.toObject();
+//     // Delete 'password' key before returning object to user
+//     delete savedObject.password;
 
-    return res.status(201).json({
-      success: true,
-      created: savedObject,
-    });
-  } catch (err) {
-    // handle duplicate email
-    if (err.code === 11000) {
-      return res.status(409)
-        .json({ success: false, message: `Email ${newUser.email} is already registered! Consider logging in.` })
-    }
-    return res.status(500).json({ success: false, message: `Error saving the user.` });
-  }
-};
+//     return res.status(201).json({
+//       success: true,
+//       created: savedObject,
+//     });
+//   } catch (err) {
+//     // handle duplicate email
+//     if (err.code === 11000) {
+//       return res.status(409)
+//         .json({ success: false, message: `Email ${newUser.email} is already registered! Consider logging in.` })
+//     }
+//     return res.status(500).json({ success: false, message: `Error saving the user.` });
+//   }
+// };
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
@@ -180,7 +181,7 @@ module.exports = {
   getAllUsers,
   getUserById,
   //searchInUsers,
-  createNewUser,
+  // createNewUser,
   deleteUser,
   updateUser,
   updateUserBusinessStatus,

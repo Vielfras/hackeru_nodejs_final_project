@@ -66,7 +66,6 @@ app.use(express.static('public'));
 // --------------=====================  ROUTES  =====================--------------
 app.use('/api/cards', require('./routes/cardsRoutes'));
 app.use('/api/users', require('./routes/usersRoutes'));
-app.use('/api/auth', require('./routes/authRoutes'));
 
 
 // --------------=====================  RUN SERVER  =====================--------------
