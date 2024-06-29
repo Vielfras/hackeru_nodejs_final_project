@@ -86,7 +86,7 @@ const mustLogin = (req, res, next) => {
   }
 
   try {
-    const payload = jwt.verify(token, JWT_SECRET)
+    const payload = Auth.verifToken(token);
     req.user = payload;
 
     return next();

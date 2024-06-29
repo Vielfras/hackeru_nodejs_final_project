@@ -16,6 +16,11 @@ const generateToken = (user) => {
   );
 };
 
+const verifToken = (token) => {
+    return jwt.verify(token, JWT_SECRET);
+};
+
 module.exports = {
   generateToken,
+  verifToken,
 };
