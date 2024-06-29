@@ -55,6 +55,11 @@ const updateUserSchema = Joi.object().keys({
   'object.min': "The request's body must include at least one valid key"
 });
 
+const updateUserBusinessStatusSchema = Joi.object({
+  isBusiness: Joi.boolean().required()
+}).options(validationOptions);
+
+
 const loginSchema = Joi.object().keys({
   email: Joi.string().email().required(),
   password: Joi.string().pattern(passwordPattern, { name: 'password' }).required(),
@@ -64,6 +69,7 @@ const loginSchema = Joi.object().keys({
 const schemas = {
   createNewUser: userSchema,
   updateUser: updateUserSchema,
+  updateUserBusinessStatus: updateUserBusinessStatusSchema,
   login: loginSchema,
 };
 

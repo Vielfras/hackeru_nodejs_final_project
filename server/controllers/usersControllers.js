@@ -142,6 +142,33 @@ const updateUser = async (req, res) => {
   }
 };
 
+
+
+const updateUserBusinessStatus = async (req, res) => {
+  console.log(req.body);
+  const { error, value } = schemas.updateUserBusinessStatus.validate(req.body);
+
+  if (error) {
+    return res.status(400).json(Err.multipleErrToString(error));
+  }
+
+  const { id } = req.params;
+
+  try {
+    const updated = await User.findByIdAndUpdate(id, { isBusiness: value.isBusiness }, { new: true }).select('-password').exec();
+    if (!updated) {
+      return Err.userNotFound(id);
+    }
+
+    return res.status(200).json({
+      success: true,
+      updated: updated,
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `Failed to update user's business status: ${err}` });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -149,4 +176,5 @@ module.exports = {
   createNewUser,
   deleteUser,
   updateUser,
+  updateUserBusinessStatus,
 };

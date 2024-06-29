@@ -92,7 +92,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
    - [ ] Create a PUT route `/users/:id` to edit user details (accessible by the user).
 
 6. **Change Business Status**:
-   - [ ] Create a PATCH route `/users/:id` to change business status (accessible by the user).
+   - [X] Create a PATCH route `/users/:id` to change business status (accessible by the user).
 
 7. **Delete User**:
    - [ ] Create a DELETE route `/users/:id` to delete a user (accessible by the user or admin).
