@@ -1,14 +1,12 @@
 // authControllers.js
 
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 const schemas = require("../schemas/usersSchema");
 const User = require("../models/User");
 const Err = require("../utils/errorHandling");
+const Auth = require("../utils/authorisation");
 
-
-const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
 
 const ROLES = {
   ADMIN: 'admin',
@@ -37,17 +35,7 @@ const register = async (req, res) => {
 
     const saved = await newUser.save();
 
-    const token = jwt.sign(
-      {
-        id: saved.id,
-        isBusiness: saved.isBusiness,
-        isAdmin: saved.isAdmin,
-      },
-      JWT_SECRET,
-      {
-        expiresIn: JWT_EXPIRES_IN,
-      }
-    );
+    const token = Auth.generateToken(saved);
 
     return res.status(201).json({ success: true, created: newUser, token: token });
   } catch (err) {
@@ -67,23 +55,12 @@ const login = async (req, res) => {
       return res.status(403).json({ sucees: false, message: "Invalid credintials." });
     }
 
-    // check if password match
     const isMatch = await bcrypt.compare(value.password, user.password);
     if (!isMatch) {
       return res.status(403).json({ sucees: false, message: "Invalid credintials." });
     }
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        isBusiness: user.isBusiness,
-        isAdmin: user.isAdmin,
-      },
-      JWT_SECRET,
-      {
-        expiresIn: JWT_EXPIRES_IN,
-      }
-    );
+    const token = Auth.generateToken(user);
 
     return res.status(200).json({ success: true, token: token });
   } catch (err) {
