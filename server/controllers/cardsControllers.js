@@ -22,10 +22,9 @@ const getAllCards = async (req, res) => {
 
 const getUserCards = async (req, res) => {
   try {
-    // Assuming req.user is populated by mustLogin middleware
     const userId = req.user.id;
-    console.log(userId);
     const userCards = await Card.find({ user_id: userId });
+
     return res.status(200).json({
       success: true,
       data: userCards,

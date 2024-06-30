@@ -57,7 +57,7 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 - **Get All Users**: `GET /users` (Admin only)
 - **Get User by ID**: `GET /users/:id` (Admin or the user)
 - **Edit User**: `PUT /users/:id` (The user)
-- **Change Business Status**: `PATCH /users/:id` (The user)
+- **Change Business Status**: `PATCH /users/:id` (Admin or user)
 - **Delete User**: `DELETE /users/:id` (Admin or the user)
 
 ### 2. Cards Endpoints
@@ -65,13 +65,13 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 - **Get User Cards**: `GET /cards/my-cards` (The user)
 - **Get Card by ID**: `GET /cards/:id`
 - **Create New Card**: `POST /cards` (Business user)
-- **Edit Card**: `PUT /cards/:id` (The card creator)
+- **Edit Card**: `PUT /cards/:id` (Admin or card creator)
 - **Like Card**: `PATCH /cards/:id` (Registered user)
-- **Delete Card**: `DELETE /cards/:id` (Admin or the card creator)
+- **Delete Card**: `DELETE /cards/:id` (Admin or card creator)
 
 ---
 
-# Actionable Tasks
+# Version 1.0.0:
 
 ## 1. User Endpoints
 1. **Register User**:

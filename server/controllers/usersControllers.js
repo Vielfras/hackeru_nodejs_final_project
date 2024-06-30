@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const schemas = require("../schemas/usersSchema");
 const User = require("../models/User");
 const Err = require("../utils/errorHandling");
+const Auth = require("../utils/authorisation");
 
 
 const getAllUsers = async (req, res) => {
@@ -21,13 +22,12 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
-  const requestingUser = req.user;
-
+  
   try {
-    // Check if the requesting user is an admin or requesting their own data
-    if (requestingUser.id !== id && !requestingUser.isAdmin) {
-      return res.status(403).json({ success: false, message: "Access denied. You can only access your own data." });
-    }
+    const authError = isAdminOrCreator(req.user, id, res);
+    if (authError) {
+      return authError;
+    } 
 
     const found = await User.findById(id).select('-password').exec();
     if (!found) {
@@ -103,13 +103,12 @@ const getUserById = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
-  const requestingUser = req.user;
-
+  
   try {
-    // Check if the requesting user is an admin or requesting their own data
-    if (requestingUser.id !== id && !requestingUser.isAdmin) {
-      return res.status(403).json({ success: false, message: "Access denied. You can only access your own data." });
-    }
+    const authError = Auth.isAdminOrCreator(req.user, id, res);
+    if (authError) {
+      return authError;
+    } 
 
     const deleted = await User.findByIdAndDelete(id).select('-password').exec();
     if (!deleted) throw new Error();
@@ -125,7 +124,7 @@ const deleteUser = async (req, res) => {
 
 
 // TODO - Add some way to update onlt the field that was sent
-//        as now it's possible to only send on field of a user and all the rest will be deleted.
+//        as now it's possible to only send one field of a user and all the rest will be deleted.
 //        EX. Sending only the first name, will delete the middle and the last.
 const updateUser = async (req, res) => {
   const { error, value } = schemas.updateUser.validate(req.body);
@@ -134,8 +133,13 @@ const updateUser = async (req, res) => {
   }
 
   const { id } = req.params;
-
+  
   try {
+    const authError = Auth.isAdminOrCreator(req.user, id, res);
+    if (authError) {
+      return authError;
+    } 
+
     const updated = await User.findByIdAndUpdate(id, value, { new: true }).select('-password').exec();
     if (!updated) {
       return Err.userNotFound(id);
@@ -163,6 +167,11 @@ const updateUserBusinessStatus = async (req, res) => {
   const { id } = req.params;
 
   try {
+    const authError = Auth.isAdminOrCreator(req.user, id, res);
+    if (authError) {
+      return authError;
+    } 
+
     const updated = await User.findByIdAndUpdate(id, { isBusiness: value.isBusiness }, { new: true }).select('-password').exec();
     if (!updated) {
       return Err.userNotFound(id);
