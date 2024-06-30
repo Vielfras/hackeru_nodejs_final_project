@@ -54,21 +54,23 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
 
 ### 1. User Endpoints
 - **Register User**: `POST /users`
-- **Login User**: `POST /users/login`
+- **Login User**: `POST /users/login` (3 failed attempts will block User for 24h)
 - **Get All Users**: `GET /users` (Admin only)
-- **Get User by ID**: `GET /users/:id` (Admin or the user)
-- **Edit User**: `PUT /users/:id` (The user)
-- **Change Business Status**: `PATCH /users/:id` (Admin or user)
+- **Get User by ID**: `GET /users/:id` (Admin or User)
+- **Edit User**: `PUT /users/:id` (Registered User)
+- **Change Business Status**: `PATCH /users/:id` (Admin or User)
 - **Delete User**: `DELETE /users/:id` (Admin or the user)
 
 ### 2. Cards Endpoints
 - **Get All Cards**: `GET /cards`
-- **Get User Cards**: `GET /cards/my-cards` (The user)
+- **Get User Cards**: `GET /cards/my-cards` (Registered User)
 - **Get Card by ID**: `GET /cards/:id`
-- **Create New Card**: `POST /cards` (Business user)
+- **Create New Card**: `POST /cards` (Business User)
 - **Edit Card**: `PUT /cards/:id` (Admin or card creator)
-- **Like Card**: `PATCH /cards/:id` (Registered user)
+- **Like Card**: `PATCH /cards/:id` (Registered User)
 - **Delete Card**: `DELETE /cards/:id` (Admin or card creator)
+
+<br>
 
 ---
 
@@ -174,11 +176,11 @@ MONGODB_URI_PROD = "mongodb://<path_to_your_db>"
    - [ ] Allow Google API-based registration and login for non-admin and non-business users.
 
 4. **User Blocking**:
-   - [ ] Implement a mechanism to block users for 24 hours after three failed login attempts with incorrect password.
+   - [X] Implement a mechanism to block users for 24 hours after three failed login attempts with incorrect password.
 
 
 
 ### Final Requirements Before Submitting:
-- [ ] Remove redundant comments
-- [ ] Remove redundant console.logs
-- [ ] Refactor where relevant
+- [X] Remove redundant comments
+- [X] Remove redundant console.logs
+- [X] Refactor where relevant

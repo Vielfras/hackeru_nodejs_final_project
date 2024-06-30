@@ -69,4 +69,5 @@ const schemas = {
   searchCard: searchCardSchema,
 };
 
+
 module.exports = schemas;

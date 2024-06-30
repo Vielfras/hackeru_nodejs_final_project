@@ -1,5 +1,6 @@
+// benchmarking.js
 
-const timeFunc = async (func, startMsg, stopMsg='') => {
+const timeFunc = async (func, startMsg, stopMsg = '') => {
   console.log(startMsg);
   const startTime = Date.now();
   await func();
@@ -13,5 +14,6 @@ const timeFunc = async (func, startMsg, stopMsg='') => {
     console.log(`${stopMsg} completed in ${executionTime} seconds.`);
   }
 };
+
 
 module.exports = timeFunc;

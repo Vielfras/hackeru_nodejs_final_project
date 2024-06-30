@@ -1,7 +1,9 @@
 // authControllers.js
 
+// 3rd Party
 const bcrypt = require("bcryptjs");
 
+// 1st Party
 const schemas = require("../schemas/usersSchema");
 const User = require("../models/User");
 const Err = require("../utils/errorHandling");

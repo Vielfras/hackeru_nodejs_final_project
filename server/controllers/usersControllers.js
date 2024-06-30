@@ -1,7 +1,5 @@
 // usersControllers.js
 
-const bcrypt = require('bcryptjs');
-
 const schemas = require("../schemas/usersSchema");
 const User = require("../models/User");
 const Err = require("../utils/errorHandling");

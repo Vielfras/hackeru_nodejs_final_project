@@ -34,26 +34,27 @@
             <h3>User Endpoints</h3>
             <ul>
                 <li><strong>Register User:</strong> <code>POST /users</code></li>
-                <li><strong>Login User:</strong> <code>POST /users/login</code></li>
+                <li><strong>Login User:</strong> <code>POST /users/login</code> (3 failed attempts will block
+                    User for 24h)</li>
                 <li><strong>Get All Users:</strong> <code>GET /users</code> (Admin only)</li>
-                <li><strong>Get User by ID:</strong> <code>GET /users/:id</code> (Admin or the user)</li>
-                <li><strong>Edit User:</strong> <code>PUT /users/:id</code> (The user)</li>
-                <li><strong>Change Business Status:</strong> <code>PATCH /users/:id</code> (The user)</li>
-                <li><strong>Delete User:</strong> <code>DELETE /users/:id</code> (Admin or the user)</li>
+                <li><strong>Get User by ID:</strong> <code>GET /users/:id</code> (Admin or User)</li>
+                <li><strong>Edit User:</strong> <code>PUT /users/:id</code> (Registered User)</li>
+                <li><strong>Change Business Status:</strong> <code>PATCH /users/:id</code> (Registered User)</li>
+                <li><strong>Delete User:</strong> <code>DELETE /users/:id</code> (Admin or User)</li>
             </ul>
             <h3>Cards Endpoints</h3>
             <ul>
                 <li><strong>Get All Cards:</strong> <code>GET /cards</code></li>
-                <li><strong>Get User Cards:</strong> <code>GET /cards/my-cards</code> (The user)</li>
+                <li><strong>Get User Cards:</strong> <code>GET /cards/my-cards</code> (Registered User)</li>
                 <li><strong>Get Card by ID:</strong> <code>GET /cards/:id</code></li>
-                <li><strong>Create New Card:</strong> <code>POST /cards</code> (Business user)</li>
-                <li><strong>Edit Card:</strong> <code>PUT /cards/:id</code> (The card creator)</li>
-                <li><strong>Like Card:</strong> <code>PATCH /cards/:id</code> (Registered user)</li>
-                <li><strong>Delete Card:</strong> <code>DELETE /cards/:id</code> (Admin or the card creator)</li>
+                <li><strong>Create New Card:</strong> <code>POST /cards</code> (Business User)</li>
+                <li><strong>Edit Card:</strong> <code>PUT /cards/:id</code> (Admin or card creator)</li>
+                <li><strong>Like Card:</strong> <code>PATCH /cards/:id</code> (Registered User)</li>
+                <li><strong>Delete Card:</strong> <code>DELETE /cards/:id</code> (Admin or card creator)</li>
             </ul>
         </section>
         <section>
-            <h2>Getting Started</h2>
+            <h2>Getting Started With Development</h2>
             <ol>
                 <li>Clone the repo</li>
                 <li>Run <code>npm install</code></li>
@@ -70,7 +71,7 @@
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 BCards. All rights reserved.</p>
+        <p>&copy; 2024 BCards. All rights reserved to Eli Oksman.</p>
     </footer>
 </body>
 

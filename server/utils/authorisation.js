@@ -1,4 +1,7 @@
+// authorisation.js
+
 const jwt = require('jsonwebtoken');
+
 
 const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
 
@@ -49,7 +52,6 @@ const checkIfBlocked = (user) => {
 
       return { isBlocked: true, remainingTime };
     } else {
-      // Unblock the user after the block period has expired
       user.isBlocked = false;
       user.loginAttempts = 0;
       user.blockExpires = null;
@@ -68,6 +70,7 @@ const resetUserBlock = async (user) => {
     await user.save();
   }
 };
+
 
 module.exports = {
   generateToken,

@@ -8,15 +8,13 @@ const Err = require("../utils/errorHandling");
 const getAllCards = async (req, res) => {
   try {
     const allCards = await Card.find({});
+
     return res.status(200).json({
       success: true,
       data: allCards,
     });
   } catch (err) {
-    return res.status(400).json({
-      success: false,
-      message: err.message,
-    });
+    return res.status(400).json({ success: false, message: err.message, });
   }
 };
 
@@ -30,10 +28,7 @@ const getUserCards = async (req, res) => {
       data: userCards,
     });
   } catch (err) {
-    return res.status(400).json({
-      success: false,
-      message: err.message,
-    });
+    return res.status(400).json({ success: false, message: err.message, });
   }
 };
 
@@ -48,18 +43,18 @@ const getCardById = async (req, res) => {
         data: found,
       });
     }
+
     return res.status(404).json({
       success: false,
       message: `Card id '${id}' not found.`,
     });
   } catch (err) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid format for card id.",
-    });
+    return res.status(400).json({ success: false, message: "Invalid format for card id.", });
   }
 };
 
+// TODO - Complete this api
+// TODO - Add this to README and Postman docs
 const searchInCards = async (req, res) => {
   const { error, value } = schemas.searchCard.validate(req.body);
 
@@ -70,6 +65,7 @@ const searchInCards = async (req, res) => {
   const { searchTerm, searchFields } = value;
   try {
     const found = await Card.multipleFieldsStringSearch(searchTerm, searchFields);
+
     return res.status(found.length !== 0 ? 200 : 204).json({
       success: true,
       data: found,
@@ -194,7 +190,6 @@ const toggleCardLike = async (req, res) => {
     return res.status(500).json({ success: false, message: `Failed to toggle like due to: ${err.message}.` });
   }
 };
-
 
 
 module.exports = {

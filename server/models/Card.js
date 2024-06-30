@@ -39,7 +39,7 @@ cardSchema.statics.getNextBizNumber = async function () {
   } catch (err) {
     throw err
   }
-}
+};
 
 
 /**

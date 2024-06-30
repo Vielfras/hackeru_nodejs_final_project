@@ -1,4 +1,5 @@
 // errorHandling.js
+
 const notLoggedIn = () => {
     return { sucees: false, message: 'Forbidden: Must be logged-in to view this content.' };
 }
@@ -14,6 +15,7 @@ const multipleErrToString = (error) => {
     const errorsArray = error.details.map((err) => err.message);
     return { success: false, message: errorsArray };
 };
+
 
 module.exports = {
     notLoggedIn,

@@ -10,7 +10,6 @@ const logToFile = (logPath) => {
     return fs.createWriteStream(path.join(logPath), { flags: 'a' });
 };
 
-
 const setupDevelopmentLogging = (app) => {
     morgan.token('statusColor', (res) => {
         const status = res.statusCode;
