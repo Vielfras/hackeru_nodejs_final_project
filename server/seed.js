@@ -1,3 +1,5 @@
+// seed.js
+
 /*
 ============================================
 ============================================
@@ -36,9 +38,8 @@ const clearDatabase = async () => {
 };
 
 
-const seedAll = async () => {
-  const startTime = Date.now();
 
+const seedAll = async () => {
   try {
     await Benchmark(clearDatabase, chalk.bold.yellow('\nClearing the database:'), "Reset");
     await Benchmark(seedCards, chalk.bold.yellow('\nSeeding Cards:'));
@@ -51,6 +52,7 @@ const seedAll = async () => {
     process.exit(1);
   }
 };
+
 
 connectDB().then(async () => {
   await Benchmark(seedAll, chalk.bold.bgGreenBright("\n ----------==========  SEEDING DATABASE  ==========----------"));
