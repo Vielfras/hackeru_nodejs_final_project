@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User'); // Import User model
 
 const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
 
@@ -47,7 +46,7 @@ const checkIfBlocked = (user) => {
     const now = Date.now();
     if (now < user.blockExpires) {
       const remainingTime = (user.blockExpires - now) / (60 * 1000); // convert to minutes
-      
+
       return { isBlocked: true, remainingTime };
     } else {
       // Unblock the user after the block period has expired
@@ -61,10 +60,20 @@ const checkIfBlocked = (user) => {
   return { isBlocked: false, remainingTime: 0 };
 };
 
+const resetUserBlock = async (user) => {
+  if (true == user.isBlocked || user.loginAttempts != 0) {
+    user.loginAttempts = 0;
+    user.isBlocked = false;
+    user.blockExpires = null;
+    await user.save();
+  }
+};
+
 module.exports = {
   generateToken,
   verifToken,
   isAdminOrCreator,
   handleFailedLogin,
   checkIfBlocked,
+  resetUserBlock,
 };

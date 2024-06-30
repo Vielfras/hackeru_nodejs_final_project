@@ -22,7 +22,6 @@ const register = async (req, res) => {
   }
 
   try {
-    // check if the email is already in use (in db)
     const existingUser = await User.find({ email: value.email });
     if (existingUser.length > 0) {
       return res.status(409).json({ success: false, message: `Email ${value.email} is already in use! Consider logging in.`, });
@@ -52,11 +51,11 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ email: value.email });
     if (!user) {
-      return res.status(403).json({ success: false, message: "Invalid credentials." });
+      return res.status(403).json({ success: false, message: "A user with this email doesn't exist." });
     }
 
-    const {isBlocked, remainingTime} = Auth.checkIfBlocked(user, res);
-    if (isBlocked){
+    const { isBlocked, remainingTime } = Auth.checkIfBlocked(user, res);
+    if (isBlocked) {
       return res.status(423).json({ success: false, message: `Account is temporarily locked due to too many failed login attempts. Please try again in ${Math.ceil(remainingTime)} minutes.` });
     }
 
@@ -66,10 +65,7 @@ const login = async (req, res) => {
       return res.status(403).json({ success: false, message: "Invalid credentials." });
     }
 
-    user.loginAttempts = 0;
-    user.isBlocked = false;
-    user.blockExpires = null;
-    await user.save();
+    await Auth.resetUserBlock(user);
 
     const token = Auth.generateToken(user);
 
@@ -97,7 +93,6 @@ const mustLogin = (req, res, next) => {
 
 const allowedRoles = (allowedRoles) => {
   return (req, res, next) => {
-    // check if allowedRoles is an array
     if (!Array.isArray(allowedRoles)) {
       throw new Error('Error: allowedRoles must be an array.');
     }
@@ -113,8 +108,12 @@ const allowedRoles = (allowedRoles) => {
     const { isBusiness, isAdmin } = req.user;
 
     let hasRole = false;
-    if (allowedRoles.includes(ROLES.BUSINESS) && isBusiness) hasRole = true;
-    if (allowedRoles.includes(ROLES.ADMIN) && isAdmin) hasRole = true;
+    if (allowedRoles.includes(ROLES.BUSINESS) && isBusiness) {
+      hasRole = true;
+    }
+    if (allowedRoles.includes(ROLES.ADMIN) && isAdmin) {
+      hasRole = true;
+    }
 
     if (!hasRole) {
       const allowedRolesString = allowedRoles.join('/')
