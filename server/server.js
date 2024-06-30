@@ -16,33 +16,18 @@ const chalk = require('chalk');
 // Mine
 const connectDB = require('./config/db');
 const { logToFile, setupDevelopmentLogging } = require('./controllers/loggingController');
-
+const {isValidIP, isValidPort} = require('./utils/environmentValidation');
 
 // --------------=====================  INIT  =====================--------------
 const SERVER_MODE = process.env.NODE_ENV;
 const { IP, PORT, LOG_FILE_PATH } = process.env;
 
-// TODO - Move IP & PORT validation to seperate file
-{
-  const isValidIP = (ip) => {
-    return true;
-  };
+if (isValidIP(IP) == false) {
+  process.exit(1);
+}
 
-  const isValidPort = (port) => {
-    return true;
-  };
-
-  if (!IP || !isValidIP(IP)) {
-    console.error(chalk.red('Error: Invalid or undefined IP address in the environment variables.'));
-    console.error(chalk.red(`Invalid IP: ${IP}`));
-    process.exit(1);
-  }
-
-  if (!PORT || !isValidPort(PORT)) {
-    console.error(chalk.red('Error: Invalid or undefined port in the environment variables.'));
-    console.error(chalk.red(`Invalid PORT: ${PORT}`));
-    process.exit(1);
-  }
+if (isValidPort(PORT) == false) {
+  process.exit(1);
 }
 
 const accessLogStream = logToFile(path.join(__dirname, LOG_FILE_PATH));
