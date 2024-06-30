@@ -52,30 +52,30 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ email: value.email });
     if (!user) {
-      return res.status(403).json({ sucees: false, message: "Invalid credintials." });
+      return res.status(403).json({ success: false, message: "Invalid credentials." });
+    }
+
+    const {isBlocked, remainingTime} = Auth.checkIfBlocked(user, res);
+    if (isBlocked){
+      return res.status(423).json({ success: false, message: `Account is temporarily locked due to too many failed login attempts. Please try again in ${Math.ceil(remainingTime)} minutes.` });
     }
 
     const isMatch = await bcrypt.compare(value.password, user.password);
     if (!isMatch) {
-      return res.status(403).json({ sucees: false, message: "Invalid credintials." });
+      await Auth.handleFailedLogin(user);
+      return res.status(403).json({ success: false, message: "Invalid credentials." });
     }
+
+    user.loginAttempts = 0;
+    user.isBlocked = false;
+    user.blockExpires = null;
+    await user.save();
 
     const token = Auth.generateToken(user);
 
     return res.status(200).json({ success: true, token: token });
   } catch (err) {
-    return res.status(500).json({ success: false, message: `Error loggin-in: ${err.message}` });
-  }
-};
-
-const myProfile = async (req, res) => {
-  try {
-    console.log("req.user.id=", req.user.id)
-    const userProfile = await User.findById(req.user.id).select('-_id -password');
-
-    return res.status(200).json({ success: true, data: userProfile });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: "Something went wrong." });
+    return res.status(500).json({ success: false, message: `Error logging in: ${err.message}` });
   }
 };
 
@@ -98,9 +98,9 @@ const mustLogin = (req, res, next) => {
 const allowedRoles = (allowedRoles) => {
   return (req, res, next) => {
     // check if allowedRoles is an array
-    if (!Array.isArray(allowedRoles)){
+    if (!Array.isArray(allowedRoles)) {
       throw new Error('Error: allowedRoles must be an array.');
-    } 
+    }
     // check if allowedRoles has at-least one element
     if (allowedRoles.length === 0) {
       throw new Error('Error: allowedRoles must contain at-least one element.');
@@ -129,7 +129,6 @@ const allowedRoles = (allowedRoles) => {
 module.exports = {
   register,
   login,
-  myProfile,
   mustLogin,
   allowedRoles,
   ROLES,

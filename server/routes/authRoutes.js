@@ -1,7 +1,7 @@
 // authRouter.js
 
 const router = require('express').Router();
-const { register, login, myProfile, mustLogin } = require('../controllers/authControllers');
+const { register, login, mustLogin } = require('../controllers/authControllers');
 
 //  base path = "/api/auth"
 

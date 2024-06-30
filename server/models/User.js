@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema(
     address: addressSchema,
     isAdmin: Boolean,
     isBusiness: Boolean,
+    
+    loginAttempts: { type: Number, default: 0 },
+    isBlocked: { type: Boolean, default: false },
+    blockExpires: { type: Date, default: null },
   },
   {
     timestamps: true,

@@ -28,8 +28,9 @@ This project involves creating a **REST API** using **Node.js** to enhance under
 3. Create a `logs` folder.
 4. Create an .env file with the following fields:
 ```
-IP="<desired_ip>"
-PORT = <desired_port>
+IP="<desired_ipv4>"
+#Port must be a number in range 1025 - 65535
+PORT = <desired_port> 
 
 LOG_FILE_PATH = "your_file_path"
 
