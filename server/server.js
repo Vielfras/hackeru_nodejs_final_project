@@ -21,12 +21,7 @@ const {isValidIP, isValidPort} = require('./utils/environmentValidation');
 // --------------=====================  INIT  =====================--------------
 const SERVER_MODE = process.env.NODE_ENV;
 const { IP, PORT, LOG_FILE_PATH } = process.env;
-
-if (isValidIP(IP) == false) {
-  process.exit(1);
-}
-
-if (isValidPort(PORT) == false) {
+if (isValidIP(IP) == false || isValidPort(PORT) == false) {
   process.exit(1);
 }
 

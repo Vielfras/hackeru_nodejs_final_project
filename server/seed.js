@@ -24,12 +24,12 @@ const Benchmark = require('./utils/benchmarking');
 
 const seedCards = async () => {
   const insertedCards = await Card.insertMany(cards);
-  console.log(chalk.blue(`\t- Inserted ${insertedCards.length} cards`));
+  console.log(chalk.blue(`\t- Inserted ${insertedCards.length} cards.`));
 };
 
 const seedUsers = async () => {
   const insertedUsers = await User.insertMany(users);
-  console.log(chalk.blue(`\t- Inserted ${insertedUsers.length} users`));
+  console.log(chalk.blue(`\t- Inserted ${insertedUsers.length} users.`));
 };
 
 const clearDatabase = async () => {
@@ -47,7 +47,7 @@ const seedAll = async () => {
 
     console.log(chalk.bold.underline.green('\nSeeding completed successfully\n'));
   } catch (e) {
-    console.log(chalk.red('[x] Seeding error'));
+    console.log(chalk.red('[ERROR] Seeding error'));
     console.log(chalk.red(e.message));
     process.exit(1);
   }
