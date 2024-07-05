@@ -11,16 +11,16 @@ const { getAllCards, getCardById, searchInCards, getUserCards, createNewCard, de
 */
 
 //  SPECIFIC
-router.get('/', getAllCards)
-router.post('/', mustLogin, allowedRoles([ROLES.BUSINESS, ROLES.ADMIN]), createNewCard)
-router.get('/my_cards', mustLogin, getUserCards)
-router.post('/search', searchInCards)
+router.get('/', getAllCards);
+router.post('/', mustLogin, allowedRoles([ROLES.BUSINESS, ROLES.ADMIN]), createNewCard);
+router.get('/my_cards', mustLogin, getUserCards);
+router.post('/search', searchInCards);
 
 //  UNspecific
-router.get('/:id', getCardById)
-router.delete('/:id', mustLogin, deleteCard)
-router.put('/:id', mustLogin, editCard)
-router.patch('/:id', mustLogin, toggleCardLike)
+router.get('/:id', getCardById);
+router.delete('/:id', mustLogin, deleteCard);
+router.put('/:id', mustLogin, editCard);
+router.patch('/:id', mustLogin, toggleCardLike);
 
 
 module.exports = router;
