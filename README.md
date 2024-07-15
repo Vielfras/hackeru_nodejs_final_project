@@ -10,18 +10,6 @@ This project involves creating a **REST API** using **Node.js** to enhance under
 - **Framework**: Express.js
 - **Libraries**: mongoose, bcryptjs, joi, jsonwebtoken, config, morgan, cors, chalk
 
-### Project Submission
-- Upload the project to Git without `node_modules`.
-- Include a `ReadMe.md` file explaining the project, its content, functionality, and usage.
-   - This can be done easily in Postman, with auto generated docs.
-
-### General Requirements
-- Maintain clean and organized code by removing unnecessary `console.log` and comments.
-- Write meaningful function and variable names.
-- Break the project into modules, each containing no more than 200 lines of code.
-- Adhere to code conventions.
-
-
 ## Getting Started
 1. Clone repo
 2. Run `npm install`
